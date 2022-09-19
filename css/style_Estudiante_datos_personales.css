@@ -20,18 +20,19 @@ html, body {
     --color2:#929aae;
     --color3:#00b3ff;
     --color4:#e6eced;
+    --color5:#a2abc277;
   }
 
 /* --- Grid Layout--- */
 body{
-    background-color: antiquewhite;
+    /*background-color: antiquewhite;*/
     text-align: center;
     height: 100%;
 }
 
 .caja{
-    border: 2px solid black;
-    background-color: rgb(192, 187, 187);
+    /*border: 2px solid black;
+    background-color: rgb(192, 187, 187);*/
     text-align: center;
 }
 
@@ -41,8 +42,8 @@ body{
                           'side_bar form_ form_ form_ form_'
                           'side_bar footer_ footer_ footer_ footer_';
 
-    grid-template-rows: 10% 15% 65% auto;
-    grid-template-columns: 20% auto auto auto 20%;
+    grid-template-rows: 20% 15% 55% auto;
+    grid-template-columns: 15% auto auto auto 30%;
     height: 100%;
     display:grid;
 
@@ -50,43 +51,41 @@ body{
 
 .side_bar{
     grid-area:side_bar;
-    background-color: aqua;
+    /*background-color: aqua;*/
     
 }
 
 .profile_ {
     grid-area:profile_;
-    background-color: lightgreen;
+    /*background-color: lightgreen;*/
 }
 
 .logo_{
     grid-area:logo_;
-    background-color: lightsalmon;
+    /*background-color: lightsalmon;*/
 }
 
 .image_{
     grid-area:image_;
-    background-color: lightseagreen;
+    /*background-color: lightseagreen;*/
 }
 
 .form_{
     grid-area:form_;
-    background-color: cornflowerblue;
+    /*background-color: cornflowerblue;*/
 }
 .blank_{
     grid-area:blank_;
-    background-color: white;
+    /*background-color: white;*/
 }
 
 .footer_{
     grid-area:footer_;
-    background-color: yellow;
+    /*background-color: yellow;*/
 }
 
+
 /* --- Side-bar--- */
-DIV{
-  border: 2px solid red;
-}
 
 .side_bar {
   background-color: var(--color1) ;
@@ -123,7 +122,6 @@ display: flex;
 .side_bar .seccion_2 a:hover:not(.active) {
   background-color: var(--color4);
   color: var(--color_text_selection);
-  border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   border-radius: 8px;
 }
@@ -140,18 +138,18 @@ div.content {
 .profile_{
 display: flex;
 align-items: center;
-border: 5px solid rgb(38, 0, 255);
+background-color: var(--color5);
+border-bottom: 2px solid black;
+border-top: 2px solid black;
 }
 
 .texto_perfil{
   width: 170%;
-  border: 2px solid rgb(38, 0, 255);
 }
 
 .logo_estudiante{
   width: 100%;
   height: 100%;
-  border: 2px solid rgb(194, 55, 55);
 }
 
 .icono_estudiante{
@@ -159,40 +157,77 @@ border: 5px solid rgb(38, 0, 255);
   height: 100%;
   border: 2px solid black;
   border-radius: 50%;
-  padding: 2px;
+  padding: 5px;
 }
 
 /* Logo universidad*/
 
-
+.logo_{
+  background-color: var(--color5);
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
 .logo_universidad{
   width: auto;
   height: 100%;
+  padding: 20px;
+ 
+  
 }
 
 /* Profile */
-
 .image_{
   display: flex;
   align-items: center;
-  border: 5px solid rgb(38, 0, 255);
+  padding: 10px;
   }
   
   .texto_foto{
-    width: 170%;
-    border: 2px solid rgb(38, 0, 255);
+    width: 100%;
   }
   
   .logo_camara{
     width: 100%;
     height: 100%;
-    border: 2px solid rgb(194, 55, 55);
   }
   
   .icono_camara{
-    padding:2px;
+    padding:5px;
     width: auto;
-    height: 100%;
+    height: 100%;   
+    border-radius: 50%;
     border: 2px solid black;
+  }
+
+  /* Footer */
+
+  .footer_{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .btn_actualizar {
+    background-color:var(--color1);
+    border-radius:10px;
+    border:1px solid #0b0e07;
+    display:inline-block;
+    cursor:pointer ;
+    color:#ffffff;
+    padding:9px 12px;
+    text-decoration:none;
+  }
+
+  .btn_actualizar:hover:not(.active) {
+    background-color:#42b968 ;
+    color: var(--color_text_selection);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border-radius: 8px;
+  }
+
+  
+  .btn_actualizar:active {
+    position:relative;
+    top:2px;
   }
