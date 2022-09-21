@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=E:\sebas\MisionTIC\Programación\CICLO 3_HTML_CCS_JAVASCRIPT\ProyectoGestion_Notas\env
+set VIRTUAL_ENV=E:\sebas\MisionTIC\Programación\CICLO 3_HTML_CCS_JAVASCRIPT\ProyectoGestion_Notas1\env
 
 if not defined PROMPT set PROMPT=$P$G
 

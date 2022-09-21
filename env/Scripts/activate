@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="E:\sebas\MisionTIC\Programación\CICLO 3_HTML_CCS_JAVASCRIPT\ProyectoGestion_Notas\env"
+VIRTUAL_ENV="E:\sebas\MisionTIC\Programación\CICLO 3_HTML_CCS_JAVASCRIPT\ProyectoGestion_Notas1\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
