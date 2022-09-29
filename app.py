@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, request, redirect, flash
 import controlador
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app = Flask(__name__)
 
 app.secret_key = 'mi clave de secreta'+str(datetime.now)
@@ -11,6 +12,45 @@ app.secret_key = 'mi clave de secreta'+str(datetime.now)
 
 #########Recuperar la informacion desde los formularios#####
 ###Recuperar y Almancenar los Registros de usuario######################
+
+@app.route('/activar', methods=['POST'])
+def activar_cuenta():
+    datos = request.form
+    username = datos['username']
+    codver = datos['codverificacion']
+    resultado = controlador.activar_usuario(username, codver)
+    if resultado:
+        flash('Cuenta activada satisfactoriamente')
+    else:
+        flash('Error en activación')
+
+    return redirect(url_for('verificar'))
+
+
+@app.route('/validarlogin', methods=['POST'])
+def val_user():
+    datos = request.form
+    username = datos['username']
+    passwd = datos['password']
+    if username == '' or passwd == '':
+        flash('datos incompetos')
+    else:
+        resultado = controlador.validar_usuarios(username)
+        if resultado == False:
+            flash('error al ingresar')
+            return redirect(url_for('login'))
+        else:
+
+            if (resultado[0]['verificado'] == 1):
+
+                if check_password_hash(resultado[0]['passwd'], passwd):
+                    return redirect(url_for('menu'))
+                else:
+                    flash('Contraseña Invalida')
+                    return redirect(url_for('login'))
+            else:
+                return redirect(url_for('verificar'))
+
 
 @app.route('/addregistro', methods=['POST'])
 def add_registro():
@@ -44,6 +84,7 @@ def add_registro():
 
 
 # Formularios de Usuarios
+
 
 @app.route('/addusuario', methods=['POST'])
 def add_usuario():
@@ -89,6 +130,11 @@ def login():
 @app.route('/registro')
 def registro():
     return render_template('registro.html')
+
+
+@app.route('/verificacion')
+def verificar():
+    return render_template('verificacion.html')
 
 
 @app.route('/mensajes')
