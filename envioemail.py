@@ -3,7 +3,7 @@ import smtplib
 
 
 def enviar_email(email_destino,codigo):
-    remitente ="chaverras@uninorte.edu.co"
+    remitente ="franciscoossa@uninorte.edu.co"
     destinatario = email_destino
     mensaje= "Correo de activación"
 
@@ -15,6 +15,6 @@ def enviar_email(email_destino,codigo):
     #email.set_content(mensaje)
     smtp = smtplib.SMTP("smtp-mail.outlook.com", port=587)
     smtp.starttls()
-    smtp.login(remitente, "Password")
+    smtp.login(remitente, "xxxxxxx")
     smtp.sendmail(remitente, destinatario, email.as_string())
     smtp.quit()
