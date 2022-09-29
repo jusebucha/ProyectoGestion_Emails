@@ -21,14 +21,14 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Bienvenido</h1>
                 </div>
-                <form class="user" action="/menu">
+                <form class="user" action="/validarlogin" method="post">
                   <div class="form-group mb-3">
-                    <input type="email" class="form-control form-control-user" name="usuario"
+                    <input type="email" class="form-control form-control-user" name="username"
                       aria-describedby="emailHelp" placeholder="Ingrese el Usuario">
                   </div>
                   <div class="form-group mb-3">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="passw"
-                      placeholder="Contraseña">
+                    <input type="password" class="form-control form-control-user" id="exampleInputPassword"
+                      name="password" placeholder="Contraseña">
                   </div>
 
                   <div class="form-group mb-3">
@@ -37,11 +37,11 @@
                       <label class="custom-control-label" for="customCheck">Recordar</label>
                     </div>
                   </div>
+
                   <button class="btn btn-outline-secondary" id="alertas" type="submit">Ingresar</button>
 
-
                 </form>
-                <br>
+
                 <div class="text-center">
                   <a class="small" href="{{ url_for('registro') }}">Registrarse</a>
                 </div>
@@ -62,22 +62,24 @@
                 {% endif %}
                 {% endwith %}
                 <!--
-                        <div class="text-center">
-                          <a class="small" href="#">Olvido su Contraseña?</a>
-                        </div>
-                        <div class="text-center">
-                          <a class="small" href="#">Registrar Usuario</a>
-                        </div>
-                  </div>
-                </div>
+                    <div class="text-center">
+                      <a class="small" href="#">Olvido su Contraseña?</a>
+                    </div>
+                    <div class="text-center">
+                      <a class="small" href="#">Registrar Usuario</a>
+                    </div>
+                    -->
+
               </div>
             </div>
           </div>
-  
         </div>
-  
       </div>
-  
+
     </div>
+
   </div>
+
+</div>
+</div>
 {% endblock %}
