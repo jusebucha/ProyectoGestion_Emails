@@ -32,13 +32,14 @@ def val_user():
     datos = request.form
     username = datos['username']
     passwd = datos['password']
-    if username == '' or passwd == '':
-        flash('datos incompetos')
+    if username =='' or passwd =='':
+        flash('datos incompletos')
+        return redirect(url_for('login1'))
     else:
         resultado = controlador.validar_usuarios(username)
         if resultado == False:
             flash('error al ingresar')
-            return redirect(url_for('login'))
+            return redirect(url_for('login1'))
         else:
 
             if (resultado[0]['verificado'] == 1):
@@ -47,7 +48,7 @@ def val_user():
                     return redirect(url_for('menu'))
                 else:
                     flash('Contraseña Invalida')
-                    return redirect(url_for('login'))
+                    return redirect(url_for('login1'))
             else:
                 return redirect(url_for('verificar'))
 
@@ -119,12 +120,17 @@ def add_materia():
 #####################Rutas de Navegacion#######################################
 @app.route('/')
 def index():
-    return render_template('login.html')
+    return render_template('login1.html')
 
 
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
+@app.route('/login1')
+def login1():
+    return render_template('login1.html')
 
 
 @app.route('/registro')
@@ -140,6 +146,10 @@ def verificar():
 @app.route('/mensajes')
 def mensajes():
     return render_template('mensajes.html')
+
+@app.route('/clave')
+def recordar_clave():
+    return render_template('clave.html')
 
 # @app.route('/menu')
 # @app.route('/menu/<username>/')
