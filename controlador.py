@@ -26,7 +26,7 @@ def insertar_usuarios(nombre, apellido, usuario, passwd):
         cursor = db.cursor()
         sql = "INSERT INTO usuarios(nombre,apellido,usuario,passw,cod_verificacion,verificado,id_rol) values(?,?,?,?,?,?,?)"
         cursor.execute(sql, [nombre, apellido, usuario,
-                             passwd, cod_ver, 0, 1])
+                            passwd, cod_ver, 0, 1])
         db.commit()
         envioemail.enviar_email(usuario, cod_ver)
         return True
