@@ -12,20 +12,18 @@
               <!-- Nested Row within Card Body -->
               <div class="row">
                 <div class="col-lg-6 d-none d-lg-block ">
-                  <br>
-                  <br>
                   <img src="/static/img/logo-Universidad-Nacional.png" class="img-fluid" alt="Responsive image" ></div>
                 <div class="col-lg-6">
                   <div class="p-5">
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Bienvenido</h1>
                     </div>
-                    <form class="user" action="/menu" >
+                    <form class="user" action="/validarlogin" method="post">
                       <div class="form-group mb-3">
-                        <input type="email" class="form-control form-control-user" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese el Usuario">
+                        <input type="email" class="form-control form-control-user" name="username" aria-describedby="emailHelp" placeholder="Ingrese el Usuario">
                       </div>
                       <div class="form-group mb-3">
-                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="passw" placeholder="Contraseña">
+                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="Contraseña">
                       </div>
                                       
                       <div class="form-group mb-3">
@@ -34,11 +32,31 @@
                           <label class="custom-control-label" for="customCheck">Recordar</label>
                         </div>
                       </div>
+                      
                       <button class="btn btn-outline-secondary" id="alertas" type="submit">Ingresar</button>
-                                        
+
                      
                     </form>
                    
+                    <div class="text-center">
+                      <a class="small" href="{{ url_for('registro') }}">Registrarse</a>
+                    </div>
+
+                    <hr>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    
+                    <div class="alert alert-dismissible alert-info">
+                      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                      <h4 class="alert-heading">Ingreso al Sistema</h4>
+                      <p class="mb-0">{{message}}</a>.</p>
+                    </div>
+                    
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}   
+
                    <!--
                     <div class="text-center">
                       <a class="small" href="#">Olvido su Contraseña?</a>
@@ -60,4 +78,4 @@
   
     </div>
   </div>
-{% endblock %}
+  {% endblock %}
