@@ -1,5 +1,8 @@
+from dataclasses import replace
 from datetime import datetime
 import sqlite3
+
+from flask import flash
 import envioemail
 
 DB_NAME = 'bdgestion.s3db'
@@ -18,7 +21,6 @@ def insertar_usuarios(nombre, apellido, usuario, passwd):
     cod_ver = cod_ver.replace(".", "")
 
     # flash(cod_ver)
-
     try:
         db = conectar_db()
         cursor = db.cursor()
@@ -62,6 +64,42 @@ def activar_usuario(username, codver):
         sql = "update usuarios set verificado=1 where usuario=? and cod_verificacion =?"
         cursor.execute(sql, [username, codver])
         db.commit()
+        return True
+    except:
+        return False
+
+
+def listar_usuarios():
+    try:
+        db = conectar_db()
+        cursor = db.cursor()
+        sql = "SELECT * FROM usuarios "
+        cursor.execute(sql)
+        resultado = cursor.fetchall()
+        usuarios = []
+        for u in resultado:
+            registro = {
+                'id': u[0],
+                'nombre': u[1],
+                'apellido': u[2],
+                'usuario': u[3],
+            }
+            usuarios.append(registro)
+
+        return usuarios
+    except:
+        return False
+
+
+def insertar_mensajes(rem, dest, asunto, cuerpo):
+
+    try:
+        db = conectar_db()
+        cursor = db.cursor()
+        sql = "INSERT INTO mensajeria(remitente,destinatario,asunto,mensaje) VALUES(?,?,?,?)"
+        cursor.execute(sql, [rem, dest, asunto, cuerpo])
+        db.commit()
+
         return True
     except:
         return False
