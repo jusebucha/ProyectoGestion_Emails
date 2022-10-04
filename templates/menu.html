@@ -31,7 +31,7 @@
         <div class="usuario">
             <img src="https://picsum.photos/id/1005/367/267" alt="">
             <p>{{ session['nombre'] }}</p>
-            <p>{{ session['username'] }}</p>
+            <p id="login_username" value="{{ session['username'] }}">{{ session['username'] }}</p>
         </div>
         <hr>
 

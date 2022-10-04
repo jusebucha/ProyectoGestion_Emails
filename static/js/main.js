@@ -1,8 +1,18 @@
 function verdatos() {
     var listapost;
-    var url = "https://jsonplaceholder.typicode.com/posts"
+    identificador = document.getElementById('login_username').value;
+    console.log(identificador)
+    var url = "http://localhost:5000/listamensindv";
+    var data = {
+        "username": "oscarluna@gmail.com",
+        "tipo": 2
+    };
 
-    fetch(url)
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-type": "application/json;charset=UTF-8" }
+    })
         .then(response => response.json())
         .then((data) => {
             listapost = data;
@@ -11,10 +21,16 @@ function verdatos() {
             for (var i = 0; i < listapost.length; i++) {
                 info = info + "<tr'>"
                 info = info + "<td>" + listapost[i]['id'] + "</td>"
-                info = info + "<td>" + listapost[i]['userId'] + "</td>"
-                info = info + "<td>" + listapost[i]['title'] + "</td>"
-                info = info + "<td>" + listapost[i]['body'] + "</td>"
-                info = info + "<td> <span class='badge bg-success'>Editar</span> <span class='badge bg-danger'>Eliminar</span></td>"
+                info = info + "<td>" + listapost[i]['remitente'] + "</td>"
+                info = info + "<td>" + listapost[i]['destinatario'] + "</td>"
+                info = info + "<td>" + listapost[i]['asunto'] + "</td>"
+                info = info + "<td>" + listapost[i]['cuerpo'] + "</td>"
+                if (listapost[i]['Tipo'] == 'Mensaje Enviado') {
+                    info = info + "<td> <span class='badge bg-info'>" + listapost[i]['Tipo'] + "</span> </td>"
+                } else {
+                    info = info + "<td> <span class='badge bg-success'>" + listapost[i]['Tipo'] + "</span> </td>"
+                }
+
                 info = info + "</tr>"
 
             }

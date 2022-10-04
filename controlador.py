@@ -1,5 +1,6 @@
 from dataclasses import replace
 from datetime import datetime
+from re import M
 import sqlite3
 
 from flask import flash
@@ -69,12 +70,77 @@ def activar_usuario(username, codver):
         return False
 
 
-def listar_usuarios():
+def listar_mensajes(tipo, username):
+    listamensajeria = []
+
     try:
         db = conectar_db()
         cursor = db.cursor()
-        sql = "SELECT * FROM usuarios "
+        sql = "SELECT * FROM mensajeria"
+        if tipo == 1:
+            cursor.execute(sql)
+        else:
+            sql = "SELECT * FROM mensajeria WHERE remitente=? or destinatario=?"
+            cursor.execute(sql, [username, username])
+        resultado = cursor.fetchall()
+
+        for m in resultado:
+            tipo = ''
+            if m[1] == username:
+                tipo = 'Mensaje Enviado'
+            else:
+                tipo = 'Mensaje Recibido'
+            registro = {
+                'id': m[0],
+                'remitente': m[1],
+                'destinatario': m[2],
+                'asunto': m[3],
+                'cuerpo': m[4],
+                'fecha_consulta': datetime.now(),
+                'Tipo': tipo
+            }
+            listamensajeria.append(registro)
+    except:
+        registro = {
+            'resultado': 'No Existen Mensajes'}
+        listamensajeria.append(registro)
+    return listamensajeria
+
+
+def lista_gral_usuarios():
+    listagralusuarios = []
+    try:
+        db = conectar_db()
+        cursor = db.cursor()
+        sql = "SELECT * FROM usuarios"
         cursor.execute(sql)
+        resultado = cursor.fetchall()
+        i = 1
+        for m in resultado:
+            registro = {
+                'id_reg': i,
+                'id': m[0],
+                'nombre': m[1],
+                'apellido': m[2],
+                'usuario': m[3],
+                'id_rol': m[7],
+                'fecha_consulta': datetime.now()
+            }
+            listagralusuarios.append(registro)
+            i += 1
+    except:
+        registro = {
+            'resultado': 'No Existen usuarios'}
+        listagralusuarios.append(registro)
+    return listagralusuarios
+
+
+def listar_usuarios(username):
+    try:
+        db = conectar_db()
+        cursor = db.cursor()
+        sql = "SELECT * FROM usuarios WHERE usuario !=?"
+        cursor.execute(sql, [username])
         resultado = cursor.fetchall()
         usuarios = []
         for u in resultado:
@@ -82,7 +148,7 @@ def listar_usuarios():
                 'id': u[0],
                 'nombre': u[1],
                 'apellido': u[2],
-                'usuario': u[3],
+                'usuario': u[3]
             }
             usuarios.append(registro)
 
