@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
             aria-controls="offcanvasExample">
-            <i class="bi bi-person"></i>
+            <i class="bi bi-person-lines-fill"></i>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,10 +18,10 @@
 
 <div class="offcanvas offcanvas-start fondo-oscuro" tabindex="-1" id="offcanvasExample"
     aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
+    <div class="offcanvas-header d-flex justify-content-around">
         <h4 class="offcanvas-title" id="offcanvasExampleLabel">
-            <i class="bi bi-robot"></i>
-            Proyecto Mision TIC
+            <i class="bi bi-envelope"></i>
+            Mensajeria
         </h4>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -29,7 +29,7 @@
     <div class="offcanvas-body">
         <hr>
         <div class="usuario">
-            <img src="https://picsum.photos/id/1005/367/267" alt="">
+            <img src="/static/img/user.png" alt="">
             <p>{{ session['nombre'] }}</p>
             <p id="login_username" value="{{ session['username'] }}">{{ session['username'] }}</p>
         </div>
