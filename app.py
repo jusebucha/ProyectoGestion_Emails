@@ -141,21 +141,21 @@ def add_registro():
 # Formularios de Usuarios
 
 
-# @app.route('/addusuario', methods=['POST'])
-# def add_usuario():
-#     datos = request.form
-#     nombre = datos['nombre']
-#     apellido = datos['apellido']
-#     usuario = datos['email']
-#     rol = datos['rol']
-#     foto = datos['foto']
-#     passw = datos['password']
-#     print(nombre)
-#     print(apellido)
-#     print(usuario)
-#     print(rol)
-#     print(foto)
-#     print(passw)
+@app.route('/addusuario', methods=['POST'])
+def add_usuario():
+    datos = request.form
+    nombre = datos['nombre']
+    apellido = datos['apellido']
+    usuario = datos['email']
+    rol = datos['rol']
+    foto = datos['foto']
+    passw = datos['password']
+    print(nombre)
+    print(apellido)
+    print(usuario)
+    print(rol)
+    print(foto)
+    print(passw)
 
     return redirect(url_for('menu_user'))
 
