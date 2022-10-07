@@ -1,12 +1,13 @@
-
 from datetime import datetime
 import re
 from tkinter.messagebox import RETRY
+from unittest import result
 from xml.dom.minidom import ReadOnlySequentialNamedNodeMap
 from flask import Flask, jsonify, render_template, url_for, request, redirect, flash, session
 import controlador
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from envioemail import enviar_email
 
 app = Flask(__name__)
 
@@ -15,6 +16,44 @@ app.secret_key = 'mi clave de secreta'+str(datetime.now)
 
 #########Recuperar la informacion desde los formularios#####
 ###Recuperar y Almancenar los Registros de usuario######################
+
+@app.route('/restablecerclave', methods=['POST'])
+def restablece_clave():
+    datos = request.form
+    print(datos)
+    usu = datos['recuuser']
+    p1 = datos['passwd1']
+    p2 = datos['passwd2']
+    p1enc = generate_password_hash(p1)
+    if p1 != p2:
+        flash('Contraseñas no Coinciden')
+    elif len(p1) < 8:
+        flash('las contraseñas no cumplen los niveles de seguridad')
+    else:
+        resultado = controlador.restablecer_clave(p1enc, usu)
+        if resultado:
+            flash('La contraseña ha sido restablecida con exito')
+        else:
+            flash("No ha sido posibles restablecer la contraseña")
+
+    return render_template('restablecer.html', datauser=usu)
+
+
+@app.route('/validaremail', methods=['POST'])
+def validar_email():
+    datos = request.form
+    usu = datos['username']
+    resultado = controlador.validar_email(usu)
+    if resultado == 'SI':
+
+        flash('Usuario Encontrado: Link de recuperacion enviado al correo')
+    elif resultado == 'NO':
+        flash('Usuario no Existe en la base de datos')
+    else:
+        flash('No se pudo realizar la consulta')
+
+    return redirect(url_for('recuperar'))
+
 
 @app.route('/listamensindv', methods=['GET', 'POST'])
 def listar_mens_ind():
@@ -26,6 +65,7 @@ def listar_mens_ind():
             resultado = controlador.listar_mensajes(1, '')
         else:
             resultado = controlador.listar_mensajes(2, username)
+
         return jsonify(resultado)
     else:
         resultado = controlador.listar_mensajes(1, '')
@@ -51,9 +91,9 @@ def activar_cuenta():
     codver = datos['codverificacion']
     resultado = controlador.activar_usuario(username, codver)
     if resultado:
-        flash('Cuenta activada satisfactoriamente')
+        flash('Cuenta Activada Satisfactoriamente')
     else:
-        flash('Error en activación')
+        flash('Error en Activacion')
 
     return redirect(url_for('verificar'))
 
@@ -68,7 +108,7 @@ def val_user():
     else:
         resultado = controlador.validar_usuarios(username)
         if resultado == False:
-            flash('error al ingresar')
+            flash('Error al Ingresar')
             return redirect(url_for('login'))
         else:
             print('Resultado: ' + str(resultado[0]['verificado']))
@@ -84,6 +124,7 @@ def val_user():
                 else:
                     flash('Contraseña Invalida')
                     return redirect(url_for('login'))
+
             else:
                 return redirect(url_for('verificar'))
 
@@ -129,7 +170,7 @@ def add_registro():
         else:
             flash('Error en Almacenamiento')
 
-    #flash(nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw)
+     #flash(nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw)
     return redirect(url_for('registro'))
     # validacion de los registros
     # if nom !='':
@@ -179,6 +220,7 @@ def index():
 
 @app.route('/login')
 def login():
+    session.clear()
     return render_template('login.html')
 
 
@@ -195,6 +237,20 @@ def verificar():
 @app.route('/mensajeria')
 def mensajeria():
     return render_template('mensajeria.html')
+
+
+@app.route('/recuperar')
+def recuperar():
+    return render_template('recuperar.html')
+
+
+@app.route('/restablecer/<usuario>')
+@app.route('/restablecer')
+def restablecer(usuario=None):
+    if usuario == None:
+        return render_template('restablecer.html')
+    else:
+        return render_template('restablecer.html', datauser=usuario)
 
 
 @app.route('/mensajes')
@@ -249,6 +305,15 @@ def menu_actividades():
 @app.route('/calificaciones')
 def menu_calificaciones():
     return render_template('calificaciones.html')
+
+
+@app.before_request
+def proteger_rutas():
+    ruta = request.path
+
+    if not 'username' in session and (ruta == '/menu' or ruta == '/mensajeria'):
+        flash('Por favor debe loguearse en el sistema')
+        return redirect('/login')
 
 
 if __name__ == '__main__':

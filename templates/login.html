@@ -31,23 +31,16 @@
                       name="password" placeholder="Contraseña">
                   </div>
 
-                  <div class="form-group mb-3">
-                    <div class="custom-control custom-checkbox small">
-                      <input type="checkbox" class="custom-control-input" id="customCheck">
-                      <label class="custom-control-label" for="customCheck">Recordar</label>
-                    </div>
-                  </div>
-
                   <button class="btn btn-outline-secondary" id="alertas" type="submit">Ingresar</button>
 
                 </form>
-
                 <div class="text-center">
                   <a class="small" href="{{ url_for('registro') }}">Registrarse</a>
                 </div>
                 <div class="text-center">
-                  <a class="small" href="#">Olvido su Contraseña?</a>
+                  <a class="small" href="{{ url_for('recuperar') }}">Olvide mi Contraseña</a>
                 </div>
+                <hr>
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
                 {% for message in messages %}
