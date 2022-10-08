@@ -2,13 +2,8 @@ from email.message import EmailMessage
 import smtplib
 
 
-<<<<<<< HEAD
-def enviar_email(email_destino,codigo):
-    remitente ="chaverras@uninorte.edu.co"
-=======
 def enviar_email(email_destino, codigo):
     remitente = "franciscoossa@uninorte.edu.co"
->>>>>>> origin/FranciscoOP
     destinatario = email_destino
     mensaje = "Correo de activación"
 
