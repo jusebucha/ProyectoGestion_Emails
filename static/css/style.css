@@ -34,7 +34,10 @@
     margin-right: 20px;
 }
 .fondo-oscuro{
-    background: #343A40 !important;
+    background: rgba(8, 129, 162, 0.637) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.445);
+    backdrop-filter: blur(7.6px);
+    -webkit-backdrop-filter: blur(7.6px);
     color: white;
 }
 .boton i{
@@ -53,7 +56,7 @@
 .boton:hover{
     cursor: pointer;
     color: white;
-    background: #494E53;
+    background: #4c4e4e;
 }
 .seleccionado{
     background: #EBECEC;

@@ -1,6 +1,5 @@
 from dataclasses import replace
 from datetime import datetime
-from re import M
 import sqlite3
 
 from flask import flash
@@ -25,9 +24,8 @@ def insertar_usuarios(nombre, apellido, usuario, passwd):
     try:
         db = conectar_db()
         cursor = db.cursor()
-        sql = "INSERT INTO usuarios(nombre,apellido,usuario,passw,cod_verificacion,verificado,id_rol) values(?,?,?,?,?,?,?)"
-        cursor.execute(sql, [nombre, apellido, usuario,
-                            passwd, cod_ver, 1, 1])
+        sql = "INSERT INTO usuarios(nombre,apellido,usuario,passw,cod_verificacion,verificado,id_rol) VALUES(?,?,?,?,?,?,?)"
+        cursor.execute(sql, [nombre, apellido, usuario, passwd, cod_ver, 0, 1])
         db.commit()
         envioemail.enviar_email(usuario, cod_ver)
         return True
@@ -36,23 +34,25 @@ def insertar_usuarios(nombre, apellido, usuario, passwd):
 
 
 def validar_usuarios(username):
-
     try:
         db = conectar_db()
         cursor = db.cursor()
         sql = "SELECT * FROM usuarios WHERE usuario=?"
         cursor.execute(sql, [username])
         resultado = cursor.fetchone()
-        usuario = [{
-            'id': resultado[0],
-            'nombre':resultado[1],
-            'apellido':resultado[2],
-            'usuario':resultado[3],
-            'passwd':resultado[4],
-            'codver':resultado[5],
-            'verificado':resultado[6],
-            'rol':resultado[7]
-        }]
+
+        usuario = [
+            {
+                'id': resultado[0],
+                'nombre':resultado[1],
+                'apellido':resultado[2],
+                'usuario':resultado[3],
+                'passwd':resultado[4],
+                'codver':resultado[5],
+                'verificado':resultado[6],
+                'rol':resultado[7]
+            }
+        ]
         return usuario
     except:
         return False
@@ -62,7 +62,7 @@ def activar_usuario(username, codver):
     try:
         db = conectar_db()
         cursor = db.cursor()
-        sql = "update usuarios set verificado=1 where usuario=? and cod_verificacion =?"
+        sql = 'UPDATE usuarios SET verificado=1 WHERE usuario=? AND cod_verificacion=?'
         cursor.execute(sql, [username, codver])
         db.commit()
         return True
@@ -76,12 +76,13 @@ def listar_mensajes(tipo, username):
     try:
         db = conectar_db()
         cursor = db.cursor()
-        sql = "SELECT * FROM mensajeria"
+        sql = "SELECT * FROM mensajeria ORDER BY fecha DESC"
         if tipo == 1:
             cursor.execute(sql)
         else:
-            sql = "SELECT * FROM mensajeria WHERE remitente=? or destinatario=?"
+            sql = "SELECT *FROM mensajeria WHERE remitente=? OR destinatario=? ORDER BY fecha DESC"
             cursor.execute(sql, [username, username])
+
         resultado = cursor.fetchall()
 
         for m in resultado:
@@ -96,19 +97,22 @@ def listar_mensajes(tipo, username):
                 'destinatario': m[2],
                 'asunto': m[3],
                 'cuerpo': m[4],
+                'fecha': m[5],
                 'fecha_consulta': datetime.now(),
-                'Tipo': tipo
+                'tipo': tipo
             }
             listamensajeria.append(registro)
     except:
         registro = {
-            'resultado': 'No Existen Mensajes'}
+            'resultado': 'No Existen Mensajes'
+        }
         listamensajeria.append(registro)
+
     return listamensajeria
 
 
 def lista_gral_usuarios():
-    listagralusuarios = []
+    listausuarios = []
     try:
         db = conectar_db()
         cursor = db.cursor()
@@ -123,23 +127,25 @@ def lista_gral_usuarios():
                 'nombre': m[1],
                 'apellido': m[2],
                 'usuario': m[3],
-                'id_rol': m[7],
+                'rol': m[7],
                 'fecha_consulta': datetime.now()
             }
-            listagralusuarios.append(registro)
+            listausuarios.append(registro)
             i += 1
     except:
         registro = {
-            'resultado': 'No Existen usuarios'}
-        listagralusuarios.append(registro)
-    return listagralusuarios
+            'resultado': 'Error en Consulta'
+        }
+        listausuarios.append(registro)
+
+    return listausuarios
 
 
 def listar_usuarios(username):
     try:
         db = conectar_db()
         cursor = db.cursor()
-        sql = "SELECT * FROM usuarios WHERE usuario !=?"
+        sql = "SELECT * FROM usuarios WHERE usuario!=?"
         cursor.execute(sql, [username])
         resultado = cursor.fetchall()
         usuarios = []
@@ -166,6 +172,37 @@ def insertar_mensajes(rem, dest, asunto, cuerpo):
         cursor.execute(sql, [rem, dest, asunto, cuerpo])
         db.commit()
 
+        return True
+    except:
+        return False
+
+
+def validar_email(username):
+    try:
+        db = conectar_db()
+        cursor = db.cursor()
+        sql = 'SELECT *FROM usuarios WHERE usuario=?'
+        cursor.execute(sql, [username])
+        resultado = cursor.fetchone()
+        if resultado != None:
+            envioemail.recuperar_email(username)
+            return 'SI'
+        else:
+            return 'NO'
+
+    except:
+        return False
+
+
+def restablecer_clave(p1, username):
+    try:
+        print(p1)
+        print(username)
+        db = conectar_db()
+        cursor = db.cursor()
+        sql = 'UPDATE usuarios SET passw=? WHERE usuario=?'
+        cursor.execute(sql, [p1, username])
+        db.commit()
         return True
     except:
         return False
