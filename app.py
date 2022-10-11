@@ -15,7 +15,7 @@ app.secret_key = 'mi clave de secreta'+str(datetime.now)
 
 
 #########Recuperar la informacion desde los formularios#####
-###Recuperar y Almancenar los Registros de usuario######################
+###Recuperar y Almacenar los Registros de usuario######################
 
 @app.route('/restablecerclave', methods=['POST'])
 def restablece_clave():
