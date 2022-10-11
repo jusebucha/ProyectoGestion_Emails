@@ -96,12 +96,14 @@ def activar_cuenta():
 
 
 @app.route('/validarlogin', methods=['POST'])
-def val_user():
+def validar_login():
+    session.clear()
     datos = request.form
     username = datos['username']
     passwd = datos['password']
     if username == '' or passwd == '':
         flash('Datos Incompletos')
+        return redirect(url_for('login'))
     else:
         resultado = controlador.validar_usuarios(username)
         if resultado == False:
@@ -121,7 +123,6 @@ def val_user():
                 else:
                     flash('Contraseña Invalida')
                     return redirect(url_for('login'))
-
             else:
                 return redirect(url_for('verificar'))
 

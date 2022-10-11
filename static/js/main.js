@@ -5,15 +5,15 @@ function verdatos(){
     console.log(identificador)
     var url="/listamensindv";
     var data = {
-               "username":identificador,
-               "tipo":2
+            "username":identificador,
+            "tipo":2
                 };
     
     fetch(url, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {"Content-type": "application/json;charset=UTF-8"}
-      })
+    })
     .then(response=>response.json())
     .then((data)=>{
     listapost=data;    
@@ -117,10 +117,10 @@ document.getElementById("productos").innerHTML=info
 
 class profesor {
     constructor(documento, nombre, apellido, rol) {
-      this.documento = documento;
-      this.nombre = nombre;
-      this.apellido = apellido;
-      this.rol = rol;
+    this.documento = documento;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.rol = rol;
     }
 }
 
