@@ -48,7 +48,8 @@
                   name="pass2" placeholder="Confirmar Contraseña">
               </div>
             </div>
-            <button class="btn btn-primary btn-user btn-block" type="submit">Enviar</button>
+            <a onclick="" href="{{url_for('login')}}" class="btn btn-outline-dark" type="submit">Atras</a>
+            <button class="btn btn-outline-dark" type="submit">Registrar</button>
             <!--  <hr>
                 <a href="index.html" class="btn btn-google btn-user btn-block">
                   <i class="fab fa-google fa-fw"></i> Register with Google
@@ -60,10 +61,11 @@
               <hr> -->
           </form>
           <hr>
-          <div class="text-center">
+          <!--<div class="text-center">
             <a class="small" href="{{url_for('login')}}">Ingresar al Sistema</a>
           </div>
-          <hr>
+          <hr>-->
+
           {% with messages = get_flashed_messages() %}
           {% if messages %}
           {% for message in messages %}

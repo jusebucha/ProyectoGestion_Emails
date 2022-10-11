@@ -44,14 +44,15 @@
                       name="password" placeholder="Contraseña">
                   </div>
 
-                  <button class="btn btn-outline-secondary" id="alertas" type="submit">Ingresar</button>
+                  <button class="btn btn-outline-dark" id="alertas" type="submit">Ingresar</button>
 
                 </form>
                 <div class="text-center">
-                  <a class="small" href="{{ url_for('registro') }}">Registrarse</a>
+                  <br>
+                  <a class="link-dark" href="{{ url_for('registro') }}">Registrarse</a>
                 </div>
                 <div class="text-center">
-                  <a class="small" href="{{ url_for('recuperar') }}">Olvide mi Contraseña</a>
+                  <a class="small link-secondary" href="{{ url_for('recuperar') }}">¿Has olvidado tu contraseña?</a>
                 </div>
                 <hr>
                 {% with messages = get_flashed_messages() %}

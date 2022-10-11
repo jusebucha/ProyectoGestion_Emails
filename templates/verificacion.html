@@ -39,15 +39,16 @@
                                             id="exampleInputPassword" name="codverificacion"
                                             placeholder="Ingrese el codigo">
                                     </div>
-
-                                    <button class="btn btn-outline-secondary" id="alertas" type="submit">Validar
+                                    <br>
+                                    <a onclick="" href="{{url_for('login')}}" class="btn btn-outline-dark" type="submit">Atras</a>
+                                    <button class="btn btn-outline-dark" id="alertas" type="submit">Validar
                                         Cuenta</button>
 
                                 </form>
-
+                                <!--
                                 <div class="text-center">
                                     <a class="small" href="{{ url_for('login') }}">Ingresar al sistema</a>
-                                </div>
+                                </div> -->
                                 <hr>
                                 {% with messages = get_flashed_messages() %}
                                 {% if messages %}
