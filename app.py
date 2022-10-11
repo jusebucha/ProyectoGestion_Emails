@@ -1,8 +1,5 @@
 from datetime import datetime
 import re
-from tkinter.messagebox import RETRY
-from unittest import result
-from xml.dom.minidom import ReadOnlySequentialNamedNodeMap
 from flask import Flask, jsonify, render_template, url_for, request, redirect, flash, session
 import controlador
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -170,7 +167,6 @@ def add_registro():
         else:
             flash('Error en Almacenamiento')
 
-     #flash(nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw)
     return redirect(url_for('registro'))
     # validacion de los registros
     # if nom !='':
@@ -256,21 +252,6 @@ def restablecer(usuario=None):
 @app.route('/mensajes')
 def mensajes():
     return render_template('mensajes.html')
-
-# @app.route('/menu')
-# @app.route('/menu/<username>/')
-# def menu(username):
-#    return render_template('menu.html',usuvista=username)
-
-# Detectar los metodos de envio desde el formulario de login
-
-# @app.route('/menu', methods=['GET','POST'])
-# def menu():
-#    if request.method=='POST':
-#        return render_template('menu.html')
-#    else:
-#       return '<h1>Metodo GET</h1>'
-
 
 @app.route('/menu')
 def menu():
