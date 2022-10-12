@@ -42,7 +42,6 @@ def validar_email():
     usu = datos['username']
     resultado = controlador.validar_email(usu)
     if resultado == 'SI':
-
         flash('Usuario Encontrado: Link de recuperacion enviado al correo')
     elif resultado == 'NO':
         flash('Usuario no Existe en la base de datos')
@@ -87,7 +86,10 @@ def activar_cuenta():
     username = datos['username']
     codver = datos['codverificacion']
     resultado = controlador.activar_usuario(username, codver)
-    if resultado:
+    if username == '' or codver == '':
+        flash('Datos Incompletos')
+        return redirect(url_for('verificar'))
+    elif resultado:
         flash('Cuenta Activada Satisfactoriamente')
     else:
         flash('Error en Activacion')
@@ -116,7 +118,7 @@ def validar_login():
                 if check_password_hash(resultado[0]['passwd'], passwd):
                     session['username'] = username
                     session['nombre'] = resultado[0]['nombre'] + \
-                        " "+resultado[0]['apellido']
+                    " "+resultado[0]['apellido']
                     listadouser = controlador.listar_usuarios(username)
                     print(listadouser)
                     return render_template('mensajeria.html', datauser=listadouser)
