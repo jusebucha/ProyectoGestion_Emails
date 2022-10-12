@@ -123,6 +123,7 @@ def validar_login():
                 else:
                     flash('Contraseña Invalida')
                     return redirect(url_for('login'))
+
             else:
                 return redirect(url_for('verificar'))
 
@@ -169,11 +170,6 @@ def add_registro():
             flash('Error en Almacenamiento')
 
     return redirect(url_for('registro'))
-    # validacion de los registros
-    # if nom !='':
-    #    return '<h3>'+nom + ' ' + ape +' ' + usu +' ' + ' ' + foto + ' ' + passw + '</h3>'
-    # else:
-    #    return '<h1>No Ingreso el Nombre<h1>'
 
 
 # Formularios de Usuarios
@@ -197,18 +193,6 @@ def add_usuario():
 
     return redirect(url_for('menu_user'))
 
-# Recuperar desde el Formulario Materias
-
-
-@app.route('/addmateria', methods=['POST'])
-def add_materia():
-    datos = request.form
-    codigomat = datos['codigomat']
-    nombremat = datos['nombremat']
-
-    return redirect(url_for('menu_materias'))
-
-
 #####################Rutas de Navegacion#######################################
 @app.route('/')
 def index():
@@ -217,7 +201,6 @@ def index():
 
 @app.route('/login')
 def login():
-    session.clear()
     return render_template('login.html')
 
 
@@ -295,7 +278,7 @@ def proteger_rutas():
 
     if not 'username' in session and (ruta == '/menu' or ruta == '/mensajeria'):
         flash('Por favor debe loguearse en el sistema')
-        return redirect('/login')
+        return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
