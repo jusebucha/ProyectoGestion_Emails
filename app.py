@@ -86,16 +86,17 @@ def activar_cuenta():
     username = datos['username']
     codver = datos['codverificacion']
     resultado = controlador.activar_usuario(username, codver)
-    if username == '' or codver == '':
-        flash('Datos Incompletos')
-        return redirect(url_for('verificar'))
-    elif resultado:
+    if resultado == 'SI':
+        print ("El resultado es")
+        print (resultado)
         flash('Cuenta Activada Satisfactoriamente')
     else:
+        print ("El resultado es")
+        print (resultado)
         flash('Error en Activacion')
 
     return redirect(url_for('verificar'))
-
+    
 
 @app.route('/validarlogin', methods=['POST'])
 def validar_login():
