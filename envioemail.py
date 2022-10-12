@@ -27,7 +27,7 @@ def recuperar_email(email_destino):
     mensaje="<hr>"
     mensaje = "<h2>Recuperación de Cuenta</h2>"
     mensaje = mensaje + "<a href='https://mensajeriati.azurewebsites.net/restablecer/" + email_destino + \
-        "'>Ingrese Aquí para restablecer su Contraseña</a>"
+    "'>Ingrese Aquí para restablecer su Contraseña</a>"
     mensaje=mensaje+ "<hr>"
     email = EmailMessage()
     email['From'] = remitente
